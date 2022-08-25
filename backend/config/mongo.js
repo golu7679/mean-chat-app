@@ -18,12 +18,10 @@ const init = () => {
 
 // connect to mongo host, set retry on initial fail
 const connectMongo = () => {
-  mongoose
-    .connect(config.mongo.host, config.mongo.options)
-    .catch((err) => {
-      log.err("mongo", "connection to db failed", err.message || err);
-      setTimeout(connectMongo, 2000);
-    });
+  mongoose.connect(config.mongo.host, config.mongo.options).catch((err) => {
+    log.err("mongo", "connection to db failed", err.message || err);
+    setTimeout(connectMongo, 2000);
+  });
 };
 
 module.exports = init;
