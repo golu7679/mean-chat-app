@@ -23,14 +23,14 @@
       <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="(isHandset$ | async) && userAuthenticated" (click)="toggleDrawer()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>chat-app</span>
+      <span>MEAN Chat</span>
       <span class="example-spacer"></span>
-      <ng-template [ngIf]="userAuthenticated" [ngIfElse]="logout">
-        <button mat-button>
+      <ng-template [ngIf]="!userAuthenticated" [ngIfElse]="logout">
+        <button mat-button routerLink="/sign_up">
           <mat-icon>favorite</mat-icon>
           Signup
         </button>
-        <button mat-button>
+        <button mat-button routerLink="/login">
           <mat-icon>login</mat-icon>
           Login
         </button>
