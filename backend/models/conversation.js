@@ -20,17 +20,16 @@ ConversationSchema.statics.addConversation = (conversation, callback) => {
   conversation.save(callback);
 };
 
-ConversationSchema.statics.getConversations = (callback) => {
+ConversationSchema.statics.getConversations = callback => {
   Conversation.find({}, callback);
 };
 
-ConversationSchema.statics.getChatRoom = (callback) => {
+ConversationSchema.statics.getChatRoom = callback => {
   Conversation.findOne({ name: "chat-room" }, (err, conversation) => {
     if (err || conversation == null) {
       let chatRoom = new Conversation({ name: "chat-room" });
       Conversation.addConversation(chatRoom, (err, conv) => {
-        if (err)
-          return callback("There was an error on getting the conversation");
+        if (err) return callback("There was an error on getting the conversation");
         return callback(null, conv);
       });
     } else {
@@ -48,11 +47,7 @@ ConversationSchema.statics.getChatRoom = (callback) => {
   });
 };
 
-ConversationSchema.statics.getConversationByName = (
-  participant1,
-  participant2,
-  callback
-) => {
+ConversationSchema.statics.getConversationByName = (participant1, participant2, callback) => {
   let combo1 = "" + participant1 + "-" + participant2;
   let combo2 = "" + participant2 + "-" + participant1;
 

@@ -3,7 +3,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const User = require("../models/user");
 const config = require("./index");
 
-module.exports = (passport) => {
+module.exports = passport => {
   let options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
     secretOrKey: config.secret,
@@ -26,6 +26,6 @@ module.exports = (passport) => {
           return done(null, false);
         }
       });
-    })
+    }),
   );
 };

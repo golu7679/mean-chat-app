@@ -18,7 +18,7 @@ const app = express();
 app.use(
   cors({
     origin: "*",
-  })
+  }),
 );
 app.use(logger("dev"));
 app.use(bodyParser.json());

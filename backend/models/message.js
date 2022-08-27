@@ -28,7 +28,7 @@ MessageSchema.statics.addMessage = (message, callback) => {
   message.save(callback);
 };
 
-MessageSchema.statics.getMessages = (callback) => {
+MessageSchema.statics.getMessages = callback => {
   Message.find({}, callback);
 };
 

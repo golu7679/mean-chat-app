@@ -66,28 +66,24 @@ router.post("/authenticate", (req, res, next) => {
 });
 
 // profile
-router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    let response = { success: true };
-    response.msg = "Profile retrieved successfuly";
-    response.user = req.user;
-    res.json(response);
-  }
-);
+router.get("/profile", passport.authenticate("jwt", { session: false }), (req, res, next) => {
+  let response = { success: true };
+  response.msg = "Profile retrieved successfuly";
+  response.user = req.user;
+  res.json(response);
+});
 
 // user list
 router.get("/", (req, res, next) => {
   User.getUsers()
-    .then((users) => {
+    .then(users => {
       let response = {
         success: true,
         users: users,
       };
       return res.json(response);
     })
-    .catch((err) => {
+    .catch(err => {
       log.err("mongo", "failed to get users", err.message || err);
       return next(new Error("Failed to get users"));
     });

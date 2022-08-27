@@ -5,10 +5,10 @@ const config = require("../config");
 const users = [];
 const connections = [];
 
-const initialize = (server) => {
+const initialize = server => {
   const io = socketIo(server, { path: config.chatPath });
 
-  io.on("connection", (socket) => {
+  io.on("connection", socket => {
     connections.push(socket);
     socket.join("chat-room");
 
@@ -16,7 +16,7 @@ const initialize = (server) => {
       msg: "Welcome to the chat server!",
     });
 
-    socket.on("username", (data) => {
+    socket.on("username", data => {
       if (data.username) {
         socket.username = data.username;
         let user = { username: socket.username, id: socket.id };
@@ -35,7 +35,7 @@ const initialize = (server) => {
       socket.emit("active", users);
     });
 
-    socket.on("message", (data) => {
+    socket.on("message", data => {
       if (data.to === "chat-room") {
         socket.broadcast.to("chat-room").emit("message", data.message);
       } else {
@@ -58,12 +58,7 @@ const initialize = (server) => {
           }
         }
       }
-      console.log(
-        "[%s].to(%s)<< %s",
-        data.message.from,
-        data.to,
-        data.message.text
-      );
+      console.log("[%s].to(%s)<< %s", data.message.from, data.to, data.message.text);
 
       // save the message to the database
       let message = new Message(data.message);
@@ -91,7 +86,7 @@ const initialize = (server) => {
   });
 };
 
-const searchUser = (username) => {
+const searchUser = username => {
   for (let i = 0; i < users.length; i++) {
     if (users[i].username === username) {
       return users[i];
@@ -101,7 +96,7 @@ const searchUser = (username) => {
   return false;
 };
 
-const searchConnections = (username) => {
+const searchConnections = username => {
   let found = [];
   for (let conn of connections) {
     if (conn.username === username) {

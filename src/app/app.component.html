@@ -13,21 +13,14 @@
       <div mat-subheader>Users</div>
       <mat-list-item *ngFor="let folder of folders">
         <mat-icon mat-list-icon>person</mat-icon>
-        <div mat-line>{{folder.name}}</div>
-        <div mat-line> {{folder.updated | date}} </div>
+        <div mat-line>{{ folder.name }}</div>
+        <div mat-line>{{ folder.updated | date }}</div>
       </mat-list-item>
     </mat-list>
-
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        *ngIf="(isHandset$ | async) && userAuthenticated"
-        (click)="toggleDrawer()"
-      >
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="(isHandset$ | async) && userAuthenticated" (click)="toggleDrawer()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>chat-app</span>
@@ -44,11 +37,8 @@
       </ng-template>
 
       <ng-template #logout>
-        <button mat-button>
-          <mat-icon>logout</mat-icon> Logout
-        </button>
+        <button mat-button><mat-icon>logout</mat-icon> Logout</button>
       </ng-template>
-
     </mat-toolbar>
 
     <router-outlet></router-outlet>
