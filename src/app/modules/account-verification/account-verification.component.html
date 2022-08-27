@@ -1,0 +1,10 @@
+<div fxLayout="row" fxLayoutAlign="space-evenly center" style="height: 90%">
+  <mat-card fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="90">
+    <mat-toolbar color="primary"> Enter OTP to activate your account </mat-toolbar>
+    <form fxLayoutAlign="stretch" fxLayout="column">
+      <ngx-otp-input [config]="otpInputConfig" (otpChange)="otp=$event.join('')"></ngx-otp-input>
+      <button mat-raised-button type="button" color="primary" (click)="submit()">Submit</button>
+    </form>
+  </mat-card>
+</div>
+
