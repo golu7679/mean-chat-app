@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { NgxOtpBehavior, NgxOtpInputConfig } from "ngx-otp-input";
+import { NgxOtpInputConfig } from "ngx-otp-input";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-account-verification",
@@ -9,7 +10,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 export class AccountVerificationComponent implements OnInit {
   otp: string;
-
+  token;
   otpInputConfig: NgxOtpInputConfig = {
     otpLength: 5,
     autofocus: true,
@@ -23,9 +24,16 @@ export class AccountVerificationComponent implements OnInit {
     },
   };
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private router: Router) {
+    this.token = this.router.getCurrentNavigation()?.extras.state;
+  }
 
-  ngOnInit(): void {}
+  async ngOnInit() {
+    if (!this.token) {
+      await this.router.navigate(["/"]);
+    }
+    console.log(this.token);
+  }
 
   submit() {
     if (this.otp.length !== 6) {

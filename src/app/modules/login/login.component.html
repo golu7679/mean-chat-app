@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-evenly center" style="height: 90%">
   <mat-card fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="90">
-    <mat-toolbar color="primary"> Login Page </mat-toolbar>
-    <form fxLayoutAlign="stretch" fxLayout="column">
+    <mat-toolbar color="primary"> Login </mat-toolbar>
+    <form [formGroup]="loginForm" fxLayoutAlign="stretch" fxLayout="column" (submit)="submit()">
       <mat-form-field>
         <input matInput type="text" placeholder="Email" />
       </mat-form-field>
@@ -13,7 +13,7 @@
         </button>
       </mat-form-field>
 
-      <button mat-raised-button type="button" color="primary">Login up</button>
+      <button mat-raised-button type="submit" color="primary">Login up</button>
     </form>
   </mat-card>
 </div>

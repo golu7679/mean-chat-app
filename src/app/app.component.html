@@ -8,13 +8,13 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>Users</mat-toolbar>
     <mat-list>
-      <div mat-subheader>Users</div>
-      <mat-list-item *ngFor="let folder of folders">
-        <mat-icon mat-list-icon>person</mat-icon>
+      <mat-list-item matRipple *ngFor="let folder of folders">
+        <img matListAvatar src="https://picsum.photos/200" alt="avatar" height="50" width="50" />
         <div mat-line>{{ folder.name }}</div>
         <div mat-line>{{ folder.updated | date }}</div>
+        <span matBadge="4" matBadgeColor="accent" matBadgeOverlap="true"></span>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>
@@ -37,7 +37,10 @@
       </ng-template>
 
       <ng-template #logout>
-        <button mat-button><mat-icon>logout</mat-icon> Logout</button>
+        <button mat-button>
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
       </ng-template>
     </mat-toolbar>
 
