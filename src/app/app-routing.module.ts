@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import("./modules/account-verification/account-verification.module").then(m => m.AccountVerificationModule),
   },
   {
+    path: "conversation/:id",
+    loadChildren: () => import("./modules/conversation/conversation.module").then(m => m.ConversationModule),
+  },
+  {
     path: "**",
     redirectTo: "",
     pathMatch: "full",
