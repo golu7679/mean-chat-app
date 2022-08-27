@@ -6,12 +6,15 @@ import { MaterialsModule } from "../../materials.module";
 
 @NgModule({
   declarations: [LoginComponent],
-  imports: [CommonModule,
-    RouterModule.forChild([{
-      path: '',
-      component: LoginComponent
-    }]),
-    MaterialsModule
+  imports: [
+    CommonModule,
+    RouterModule.forChild([
+      {
+        path: "",
+        component: LoginComponent,
+      },
+    ]),
+    MaterialsModule,
   ],
 })
 export class LoginModule {}

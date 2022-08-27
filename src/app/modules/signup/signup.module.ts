@@ -8,11 +8,13 @@ import { MaterialsModule } from "../../materials.module";
   declarations: [SignupComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([{
-      path: '',
-      component: SignupComponent
-    }]),
-    MaterialsModule
+    RouterModule.forChild([
+      {
+        path: "",
+        component: SignupComponent,
+      },
+    ]),
+    MaterialsModule,
   ],
 })
 export class SignupModule {}

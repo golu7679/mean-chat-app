@@ -8,36 +8,31 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrls: ["./account-verification.component.scss"],
 })
 export class AccountVerificationComponent implements OnInit {
+  otp: string;
 
-  otp:string;
-
- otpInputConfig: NgxOtpInputConfig = {
+  otpInputConfig: NgxOtpInputConfig = {
     otpLength: 5,
     autofocus: true,
     classList: {
-      inputBox: 'my-super-box-class',
-      input: 'my-super-class',
-      inputFilled: 'my-super-filled-class',
-      inputDisabled: 'my-super-disable-class',
-      inputSuccess: 'my-super-success-class',
-      inputError: 'my-super-error-class',
+      inputBox: "my-super-box-class",
+      input: "my-super-class",
+      inputFilled: "my-super-filled-class",
+      inputDisabled: "my-super-disable-class",
+      inputSuccess: "my-super-success-class",
+      inputError: "my-super-error-class",
     },
   };
 
-  constructor(private snackBar: MatSnackBar) {
-  }
+  constructor(private snackBar: MatSnackBar) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-
-  submit(){
-    if(this.otp.length !== 6){
-      this.snackBar.open('Please enter your OTP', 'OK', {
-        duration: 3000
-      })
-      return
+  submit() {
+    if (this.otp.length !== 6) {
+      this.snackBar.open("Please enter your OTP", "OK", {
+        duration: 3000,
+      });
+      return;
     }
-
   }
 }

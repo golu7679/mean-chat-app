@@ -16,7 +16,7 @@ import { NgxOtpInputModule } from "ngx-otp-input";
       },
     ]),
     MaterialsModule,
-    NgxOtpInputModule
+    NgxOtpInputModule,
   ],
 })
 export class AccountVerificationModule {}

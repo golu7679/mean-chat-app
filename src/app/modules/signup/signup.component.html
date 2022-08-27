@@ -1,29 +1,23 @@
 <div fxLayout="row" fxLayoutAlign="space-evenly center" style="height: 90%">
   <mat-card fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="90">
-    <mat-toolbar color="primary">
-      Signup Page
-    </mat-toolbar>
+    <mat-toolbar color="primary"> Signup Page </mat-toolbar>
     <form fxLayoutAlign="stretch" fxLayout="column">
-
       <mat-form-field>
-        <input matInput type="text" placeholder="Name">
+        <input matInput type="text" placeholder="Name" />
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput type="text" placeholder="Email">
+        <input matInput type="text" placeholder="Email" />
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password">
-        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-          <mat-icon class="password-icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" />
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon class="password-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
 
-      <button mat-raised-button type="button" color="danger">
-        Sign up
-      </button>
+      <button mat-raised-button type="button" color="primary">Sign up</button>
     </form>
   </mat-card>
 </div>

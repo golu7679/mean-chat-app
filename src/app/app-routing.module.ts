@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren: () => import("./modules/signup/signup.module").then(m => m.SignupModule),
   },
   {
+    path: "account_verification",
+    loadChildren: () => import("./modules/account-verification/account-verification.module").then(m => m.AccountVerificationModule),
+  },
+  {
     path: "**",
     redirectTo: "",
     pathMatch: "full",
