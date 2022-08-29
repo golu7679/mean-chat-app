@@ -9,7 +9,7 @@ const log = require("../log");
 // register
 router.post("/register", (req, res, next) => {
   let response = { success: false };
-  if (!(req.body.password == req.body.confirmPass)) {
+  if (!(req.body.password === req.body.confirmPass)) {
     let err = "The passwords don't match";
     return next(err);
   } else {
@@ -57,9 +57,9 @@ router.post("/authenticate", (req, res, next) => {
       response.token = "JWT " + token;
       response.user = signData;
       response.success = true;
-      response.msg = "User authenticated successfuly";
+      response.msg = "User authenticated successfully";
 
-      console.log("[%s] authenticated successfuly", user.username);
+      console.log("[%s] authenticated successfully", user.username);
       res.json(response);
     }
   });
@@ -68,7 +68,7 @@ router.post("/authenticate", (req, res, next) => {
 // profile
 router.get("/profile", passport.authenticate("jwt", { session: false }), (req, res, next) => {
   let response = { success: true };
-  response.msg = "Profile retrieved successfuly";
+  response.msg = "Profile retrieved successfully";
   response.user = req.user;
   res.json(response);
 });

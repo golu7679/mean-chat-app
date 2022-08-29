@@ -58,7 +58,7 @@ UserSchema.statics.authenticate = function (username, password, callback) {
       return callback(error);
     } else {
       bcryptjs.compare(password, user.password, (err, result) => {
-        if (result == true) {
+        if (result === true) {
           return callback(null, user);
         } else {
           let error = { msg: "Wrong username or password" };
