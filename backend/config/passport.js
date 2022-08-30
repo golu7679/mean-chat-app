@@ -19,7 +19,7 @@ module.exports = passport => {
         if (user) {
           let signData = {
             id: user._id,
-            username: user.username,
+            email: user.email,
           };
           return done(null, signData);
         } else {

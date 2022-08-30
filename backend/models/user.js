@@ -3,7 +3,10 @@ const bcryptjs = require("bcryptjs");
 
 // user schema
 const UserSchema = mongoose.Schema({
-  username: {
+  name: {
+    required: true
+  },
+  email: {
     type: String,
     required: true,
     trim: true,
@@ -19,8 +22,8 @@ UserSchema.statics.getUserById = function (id, callback) {
   User.findById(id, callback);
 };
 
-UserSchema.statics.getUserByUsername = function (username, callback) {
-  let query = { username: username };
+UserSchema.statics.getUserByemail = function (email, callback) {
+  let query = { email: email };
   User.findOne(query, callback);
 };
 
@@ -29,10 +32,10 @@ UserSchema.statics.getUsers = () => {
 };
 
 UserSchema.statics.addUser = function (newUser, callback) {
-  User.getUserByUsername(newUser.username, (err, user) => {
+  User.getUserByemail(newUser.email, (err, user) => {
     if (err) return callback({ msg: "There was an error on getting the user" });
     if (user) {
-      let error = { msg: "Username is already in use" };
+      let error = { msg: "email is already in use" };
       return callback(error);
     } else {
       bcryptjs.genSalt(10, (err, salt) => {
@@ -50,18 +53,18 @@ UserSchema.statics.addUser = function (newUser, callback) {
   });
 };
 
-UserSchema.statics.authenticate = function (username, password, callback) {
-  User.getUserByUsername(username, (err, user) => {
+UserSchema.statics.authenticate = function (email, password, callback) {
+  User.getUserByemail(email, (err, user) => {
     if (err) return callback({ msg: "There was an error on getting the user" });
     if (!user) {
-      let error = { msg: "Wrong username or password" };
+      let error = { msg: "Wrong email or password" };
       return callback(error);
     } else {
       bcryptjs.compare(password, user.password, (err, result) => {
         if (result === true) {
           return callback(null, user);
         } else {
-          let error = { msg: "Wrong username or password" };
+          let error = { msg: "Wrong email or password" };
           return callback(error);
         }
       });

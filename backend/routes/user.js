@@ -14,7 +14,7 @@ router.post("/register", (req, res, next) => {
     return next(err);
   } else {
     let newUser = new User({
-      username: req.body.username,
+      email: req.body.email,
       password: req.body.password,
     });
 
@@ -27,9 +27,9 @@ router.post("/register", (req, res, next) => {
         response.msg = "User registered successfuly";
         response.user = {
           id: user._id,
-          username: user.username,
+          email: user.email,
         };
-        console.log("[%s] registered successfuly", user.username);
+        console.log("[%s] registered successfuly", user.email);
         res.json(response);
       }
     });
@@ -40,7 +40,7 @@ router.post("/authenticate", (req, res, next) => {
   let body = req.body;
   let response = { success: false };
 
-  User.authenticate(body.username.trim(), body.password.trim(), (err, user) => {
+  User.authenticate(body.email.trim(), body.password.trim(), (err, user) => {
     if (err) {
       response.msg = err.msg;
       res.json(response);
@@ -48,7 +48,7 @@ router.post("/authenticate", (req, res, next) => {
       // create the unique token for the user
       let signData = {
         id: user._id,
-        username: user.username,
+        email: user.email,
       };
       let token = jwt.sign(signData, config.secret, {
         expiresIn: 604800,
@@ -59,7 +59,7 @@ router.post("/authenticate", (req, res, next) => {
       response.success = true;
       response.msg = "User authenticated successfully";
 
-      console.log("[%s] authenticated successfully", user.username);
+      console.log("[%s] authenticated successfully", user.email);
       res.json(response);
     }
   });

@@ -16,17 +16,17 @@ const initialize = server => {
       msg: "Welcome to the chat server!",
     });
 
-    socket.on("username", data => {
-      if (data.username) {
-        socket.username = data.username;
-        let user = { username: socket.username, id: socket.id };
-        let existing = searchUser(user.username);
+    socket.on("email", data => {
+      if (data.email) {
+        socket.email = data.email;
+        let user = { email: socket.email, id: socket.id };
+        let existing = searchUser(user.email);
         if (existing === false) {
           users.push(user);
         }
 
         io.emit("active", users);
-        console.log("[%s] connected", socket.username);
+        console.log("[%s] connected", socket.email);
         console.log("<users>:", users);
       }
     });
@@ -46,7 +46,7 @@ const initialize = server => {
             for (let instance of instances) {
               socket.broadcast.to(instance.id).emit("message", data.message);
             }
-            let myOtherInstances = searchConnections(socket.username);
+            let myOtherInstances = searchConnections(socket.email);
             if (myOtherInstances.length > 1) {
               for (let conn of myOtherInstances) {
                 // exclude me
@@ -66,16 +66,16 @@ const initialize = server => {
     });
 
     socket.on("disconnect", () => {
-      let instances = searchConnections(socket.username);
+      let instances = searchConnections(socket.email);
       if (instances.length === 1) {
-        let user = searchUser(socket.username);
+        let user = searchUser(socket.email);
         if (user !== false) {
           users.splice(users.indexOf(user), 1);
         }
       }
 
       io.emit("active", users);
-      console.log("[%s] disconnected", socket.username);
+      console.log("[%s] disconnected", socket.email);
       console.log("<users>:", users);
 
       let connIndex = connections.indexOf(socket);
@@ -86,9 +86,9 @@ const initialize = server => {
   });
 };
 
-const searchUser = username => {
+const searchUser = email => {
   for (let i = 0; i < users.length; i++) {
-    if (users[i].username === username) {
+    if (users[i].email === email) {
       return users[i];
     }
   }
@@ -96,10 +96,10 @@ const searchUser = username => {
   return false;
 };
 
-const searchConnections = username => {
+const searchConnections = email => {
   let found = [];
   for (let conn of connections) {
-    if (conn.username === username) {
+    if (conn.email === email) {
       found.push(conn);
     }
   }

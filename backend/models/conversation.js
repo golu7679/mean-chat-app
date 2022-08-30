@@ -55,26 +55,26 @@ ConversationSchema.statics.getConversationByName = (participant1, participant2, 
     if (err || conversation1 == null) {
       Conversation.findOne({ name: combo2 }, (err, conversation2) => {
         if (err || conversation2 == null) {
-          User.getUserByUsername(participant1, (err1, user1) => {
+          User.getUserByemail(participant1, (err1, user1) => {
             if (err1 || user1 == null) {
               return callback("The user could not be found");
             }
-            User.getUserByUsername(participant2, (err2, user2) => {
+            User.getUserByemail(participant2, (err2, user2) => {
               if (err2 || user2 == null) {
                 return callback("The user could not be found");
               }
               let mihai1 = {
-                username: user1.username,
+                email: user1.email,
                 id: user1._id,
               };
               let mihai2 = {
-                username: user2.username,
+                email: user2.email,
                 id: user2._id,
               };
               let participants = [mihai1, mihai2];
               let newConv = new Conversation({
                 participants: participants,
-                name: "" + mihai1.username + "-" + mihai2.username,
+                name: "" + mihai1.email + "-" + mihai2.email,
               });
 
               Conversation.addConversation(newConv, (err, addedConv) => {
