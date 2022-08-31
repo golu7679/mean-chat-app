@@ -1,19 +1,21 @@
 <div fxLayout="row" fxLayoutAlign="space-evenly center" style="height: 90%">
   <mat-card fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="90">
     <mat-toolbar color="primary"> Login </mat-toolbar>
+    <mat-progress-bar *ngIf="submitForm" mode="indeterminate"></mat-progress-bar>
     <form [formGroup]="loginForm" fxLayoutAlign="stretch" fxLayout="column" (submit)="submit()">
       <mat-form-field>
-        <input matInput type="text" placeholder="Email" />
+        <input matInput type="text" placeholder="Email" formControlName="email" />
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" />
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password" />
         <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon class="password-icon">{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
 
-      <button mat-raised-button type="submit" color="primary">Login up</button>
+      <button *ngIf="!submitForm" mat-raised-button type="submit" color="primary">Login up</button>
+      <mat-spinner *ngIf="submitForm" [diameter]="30"></mat-spinner>
     </form>
   </mat-card>
 </div>
