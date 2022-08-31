@@ -9,11 +9,9 @@ const log = require("../log");
 // register
 router.post("/register", (req, res, next) => {
   let response = { success: false };
-  if (!(req.body.password === req.body.confirmPass)) {
-    let err = "The passwords don't match";
-    return next(err);
-  } else {
+
     let newUser = new User({
+      name: req.body.name,
       email: req.body.email,
       password: req.body.password,
     });
@@ -21,19 +19,18 @@ router.post("/register", (req, res, next) => {
     User.addUser(newUser, (err, user) => {
       if (err) {
         response.msg = err.msg || "Failed to register user";
-        res.json(response);
+        res.status(err.status).json(response);
       } else {
         response.success = true;
-        response.msg = "User registered successfuly";
+        response.msg = "User registered successfully";
         response.user = {
           id: user._id,
           email: user.email,
         };
-        console.log("[%s] registered successfuly", user.email);
+        console.log("[%s] registered successfully", user.email);
         res.json(response);
       }
     });
-  }
 });
 
 router.post("/authenticate", (req, res, next) => {
@@ -50,9 +47,7 @@ router.post("/authenticate", (req, res, next) => {
         id: user._id,
         email: user.email,
       };
-      let token = jwt.sign(signData, config.secret, {
-        expiresIn: 604800,
-      });
+      let token = jwt.sign(signData, config.tokenSecret);
 
       response.token = "JWT " + token;
       response.user = signData;

@@ -6,7 +6,7 @@ const config = require("./index");
 module.exports = passport => {
   let options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
-    secretOrKey: config.secret,
+    secretOrKey: config.tokenSecret,
   };
 
   passport.use(
@@ -15,7 +15,6 @@ module.exports = passport => {
         if (err) {
           return done(err, false);
         }
-
         if (user) {
           let signData = {
             id: user._id,
