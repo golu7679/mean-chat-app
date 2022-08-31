@@ -27,8 +27,8 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 app.get("/", (req, res) => {
-  return res.send({"message" : "hi"})
-})
+  return res.send({ message: "hi" });
+});
 
 // static folder
 app.use(config.root, express.static(path.join(__dirname, "public")));

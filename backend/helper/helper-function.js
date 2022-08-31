@@ -1,1 +1,1 @@
-module.exports = generateSixDigit = () => Math.floor(100000 + Math.random() * 900000)
+module.exports = generateSixDigit = () => Math.floor(100000 + Math.random() * 900000);

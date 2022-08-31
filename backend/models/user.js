@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const helper = require("../helper/helper-function");
+const generateSixDigit = require("../helper/helper-function");
 const config = require("../config");
 
 // user schema
@@ -26,11 +26,19 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-UserSchema.statics.getUserById = function(id, callback) {
+generateOTPToken = () => {
+  const otp = generateSixDigit();
+  console.log("Your otp is ", otp);
+  return jwt.sign({ otp: otp }, config.otpSecret, {
+    expiresIn: "10m",
+  });
+};
+
+UserSchema.statics.getUserById = function (id, callback) {
   User.findById(id, callback);
 };
 
-UserSchema.statics.getUserByemail = function(email, callback) {
+UserSchema.statics.getUserByemail = function (email, callback) {
   let query = { email: email };
   User.findOne(query, callback);
 };
@@ -39,9 +47,9 @@ UserSchema.statics.getUsers = () => {
   return User.find({}, "-password");
 };
 
-UserSchema.statics.addUser = function(newUser, callback) {
+UserSchema.statics.addUser = function (newUser, callback) {
   User.getUserByemail(newUser.email, (err, user) => {
-    if (err) return callback({ msg: "There was an error on getting the user" , status: 500});
+    if (err) return callback({ msg: "There was an error on getting the user", status: 500 });
     if (user) {
       let error = { msg: "email is already in use", status: 400 };
       return callback(error);
@@ -51,11 +59,9 @@ UserSchema.statics.addUser = function(newUser, callback) {
           if (err)
             return callback({
               msg: "There was an error registering the new user",
-             status: 500});
-
-          newUser.otp = jwt.sign({ otp: helper() }, config.otpSecret, {
-            expiresIn: 600000
-          })
+              status: 500,
+            });
+          newUser.otp = generateOTPToken();
           newUser.password = hash;
           newUser.save(callback);
         });
@@ -64,7 +70,7 @@ UserSchema.statics.addUser = function(newUser, callback) {
   });
 };
 
-UserSchema.statics.authenticate = function(email, password, callback) {
+UserSchema.statics.authenticate = function (email, password, callback) {
   User.getUserByemail(email, (err, user) => {
     if (err) return callback({ msg: "There was an error on getting the user" });
     if (!user) {
@@ -73,10 +79,47 @@ UserSchema.statics.authenticate = function(email, password, callback) {
     } else {
       bcryptjs.compare(password, user.password, (err, result) => {
         if (result === true) {
+          if (user.otp) return callback({ msg: "Account is not verified", status: 403 });
           return callback(null, user);
         } else {
           let error = { msg: "Wrong email or password" };
           return callback(error);
+        }
+      });
+    }
+  });
+};
+
+UserSchema.statics.sendOTP = function (email, callback) {
+  User.getUserByEmail(email, (err, user) => {
+    if (err) return callback({ msg: "There was an error on getting the user" });
+    if (!user) {
+      let error = { msg: "Wrong email" };
+      return callback(error);
+    }
+    jwt.verify(user.otp, config.otpSecret, function (err, decode) {
+      if (err) {
+        user.otp = generateOTPToken();
+        user.save(callback);
+      } else {
+        console.log("Your otp is here", decode);
+      }
+    });
+  });
+};
+
+UserSchema.statics.verifyUser = function (email, otp, callback) {
+  User.getUserByEmail(email, (err, user) => {
+    if (err) return callback({ msg: "There was an error on getting the user" });
+    if (!user) {
+      let error = { msg: "Wrong email" };
+      return callback(error);
+    } else {
+      jwt.verify(user.otp, config.otpSecret, function (err, decode) {
+        if (err) callback({ msg: "OTP expired" });
+        if (otp === decode) {
+        } else {
+          callback({});
         }
       });
     }

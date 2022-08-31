@@ -10,37 +10,47 @@ const log = require("../log");
 router.post("/register", (req, res, next) => {
   let response = { success: false };
 
-    let newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    });
+  let newUser = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
 
-    User.addUser(newUser, (err, user) => {
-      if (err) {
-        response.msg = err.msg || "Failed to register user";
-        res.status(err.status).json(response);
-      } else {
-        response.success = true;
-        response.msg = "User registered successfully";
-        response.user = {
-          id: user._id,
-          email: user.email,
-        };
-        console.log("[%s] registered successfully", user.email);
-        res.json(response);
-      }
-    });
+  User.addUser(newUser, (err, user) => {
+    if (err) {
+      response.msg = err.msg || "Failed to register user";
+      res.status(err.status).json(response);
+    } else {
+      response.success = true;
+      response.msg = "User registered successfully";
+      delete user.password;
+      delete user.otp;
+      response.user = user;
+      console.log("[%s] registered successfully", user.email);
+      res.json(response);
+    }
+  });
 });
 
-router.post("/authenticate", (req, res, next) => {
+router.post("/verify_account", (req, res, next) => {
+  const { email, otp } = req.body;
+  User.verifyUser(email, otp, (err, user) => {
+    if (err) {
+      res.status(err.status).json(err.msg);
+    } else {
+      res.json({ msg: "Acount activated" });
+    }
+  });
+});
+
+router.post("/login", (req, res, next) => {
   let body = req.body;
   let response = { success: false };
 
   User.authenticate(body.email.trim(), body.password.trim(), (err, user) => {
     if (err) {
       response.msg = err.msg;
-      res.json(response);
+      res.status(err.status).json(response);
     } else {
       // create the unique token for the user
       let signData = {
