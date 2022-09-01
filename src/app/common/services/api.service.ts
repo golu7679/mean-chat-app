@@ -17,6 +17,10 @@ export class ApiService {
     });
   }
 
+  postSignUp(data) {
+    return this.httpClient.post(environment.apiUrl + "users/register", data);
+  }
+
   postLogin(data) {
     return this.httpClient.post(environment.apiUrl + "users/login", data);
   }

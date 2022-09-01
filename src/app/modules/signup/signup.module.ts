@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { SignupComponent } from "./signup.component";
 import { RouterModule } from "@angular/router";
 import { MaterialsModule } from "../../materials.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [SignupComponent],
@@ -15,6 +16,7 @@ import { MaterialsModule } from "../../materials.module";
       },
     ]),
     MaterialsModule,
+    ReactiveFormsModule,
   ],
 })
 export class SignupModule {}

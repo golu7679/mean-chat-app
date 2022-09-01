@@ -15,6 +15,7 @@
   top: 0;
   z-index: 1;
 }
+
 .example-spacer {
   flex: 1 1;
 }
@@ -26,4 +27,12 @@
 
 .badge .mat-badge-content {
   right: 0 !important;
+}
+
+::ng-deep {
+  .error-snackbar {
+    .mat-button-wrapper {
+      color: red !important;
+    }
+  }
 }

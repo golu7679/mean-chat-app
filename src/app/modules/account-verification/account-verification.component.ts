@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 })
 export class AccountVerificationComponent implements OnInit {
   otp: string;
-  token;
+  data;
   otpInputConfig: NgxOtpInputConfig = {
     otpLength: 5,
     autofocus: true,
@@ -25,14 +25,13 @@ export class AccountVerificationComponent implements OnInit {
   };
 
   constructor(private snackBar: MatSnackBar, private router: Router) {
-    this.token = this.router.getCurrentNavigation()?.extras.state;
+    this.data = this.router.getCurrentNavigation()?.extras.state;
   }
 
   async ngOnInit() {
-    if (!this.token) {
+    if (this.data.action !== "allow_redirect") {
       await this.router.navigate(["/"]);
     }
-    console.log(this.token);
   }
 
   submit() {

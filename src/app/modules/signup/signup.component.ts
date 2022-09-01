@@ -1,4 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AuthService } from "../../common/services/auth.service";
+import { ApiService } from "../../common/services/api.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-signup",
@@ -7,7 +12,38 @@ import { Component, OnInit } from "@angular/core";
 })
 export class SignupComponent implements OnInit {
   hide = true;
-  constructor() {}
+  singUpForm: FormGroup;
+  submitForm = false;
 
-  ngOnInit(): void {}
+  constructor(private formBuilder: FormBuilder,
+              private authService: AuthService,
+              private apiService: ApiService,
+              private snackbar: MatSnackBar,
+              private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.singUpForm = this.formBuilder.group({
+      name: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      password: ["", [Validators.required]],
+    });
+  }
+
+  submit() {
+    if (this.singUpForm.invalid) return;
+
+    this.apiService.postSignUp(this.singUpForm.value).subscribe({
+      next: async data => {
+        this.snackbar.open("Check your node console", "OK");
+        await this.router.navigate(["account_verification"], { state: { action: "allow_redirect" } });
+      },
+      error: err => {
+        this.snackbar.open(err.error.message, "OK", {
+          duration: 3000,
+          panelClass: "error-snackbar",
+        });
+      },
+    });
+  }
 }

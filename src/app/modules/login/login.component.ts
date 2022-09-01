@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from "../../common/services/api.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-login",
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   submitForm = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private apiService: ApiService) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private apiService: ApiService, private snackBar: MatSnackBar) {
     this.loginForm = this.formBuilder.group({
       email: ["", [Validators.required]],
       password: ["", [Validators.required]],
@@ -28,11 +29,16 @@ export class LoginComponent implements OnInit {
     this.submitForm = true;
     this.apiService.postLogin(this.loginForm.value).subscribe({
       next: data => {
+        this.snackBar.open("Logged in successfully", "OK");
         this.router.navigate([""]);
       },
       error: async err => {
+        this.snackBar.open(err.error.msg, "OK", {
+          duration: 3000,
+          panelClass: "error-snackbar",
+        });
         this.submitForm = false;
-        if (err.status === 403) await this.router.navigate(["/account_verification"], { state: { token: "token" } });
+        if (err.status === 403) await this.router.navigate(["/account_verification"], { state: { action: "allow_redirect" } });
       },
     });
   }
