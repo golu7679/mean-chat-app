@@ -72,9 +72,9 @@ UserSchema.statics.addUser = function (newUser, callback) {
 
 UserSchema.statics.authenticate = function (email, password, callback) {
   User.getUserByemail(email, (err, user) => {
-    if (err) return callback({ msg: "There was an error on getting the user" });
+    if (err) return callback({ msg: "There was an error on getting the user", status: 500 });
     if (!user) {
-      let error = { msg: "Wrong email or password" };
+      let error = { msg: "Wrong email or password", status: 400 };
       return callback(error);
     } else {
       bcryptjs.compare(password, user.password, (err, result) => {
@@ -82,7 +82,7 @@ UserSchema.statics.authenticate = function (email, password, callback) {
           if (user.otp) return callback({ msg: "Account is not verified", status: 403 });
           return callback(null, user);
         } else {
-          let error = { msg: "Wrong email or password" };
+          let error = { msg: "Wrong email or password", status: 400 };
           return callback(error);
         }
       });
@@ -92,7 +92,7 @@ UserSchema.statics.authenticate = function (email, password, callback) {
 
 UserSchema.statics.sendOTP = function (email, callback) {
   User.getUserByEmail(email, (err, user) => {
-    if (err) return callback({ msg: "There was an error on getting the user" });
+    if (err) return callback({ msg: "There was an error on getting the user", status: 500 });
     if (!user) {
       let error = { msg: "Wrong email" };
       return callback(error);
@@ -110,13 +110,13 @@ UserSchema.statics.sendOTP = function (email, callback) {
 
 UserSchema.statics.verifyUser = function (email, otp, callback) {
   User.getUserByEmail(email, (err, user) => {
-    if (err) return callback({ msg: "There was an error on getting the user" });
+    if (err) return callback({ msg: "There was an error on getting the user", status: 500 });
     if (!user) {
       let error = { msg: "Wrong email" };
       return callback(error);
     } else {
       jwt.verify(user.otp, config.otpSecret, function (err, decode) {
-        if (err) callback({ msg: "OTP expired" });
+        if (err) callback({ msg: "OTP expired", status: 400 });
         if (otp === decode) {
         } else {
           callback({});

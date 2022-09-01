@@ -18,8 +18,9 @@ router.post("/register", (req, res, next) => {
 
   User.addUser(newUser, (err, user) => {
     if (err) {
+      console.log(err);
       response.msg = err.msg || "Failed to register user";
-      res.status(err.status).json(response);
+      res.status(err.status || 400).json(response);
     } else {
       response.success = true;
       response.msg = "User registered successfully";
@@ -38,7 +39,7 @@ router.post("/verify_account", (req, res, next) => {
     if (err) {
       res.status(err.status).json(err.msg);
     } else {
-      res.json({ msg: "Acount activated" });
+      res.json({ msg: "Account activated" });
     }
   });
 });
@@ -50,6 +51,7 @@ router.post("/login", (req, res, next) => {
   User.authenticate(body.email.trim(), body.password.trim(), (err, user) => {
     if (err) {
       response.msg = err.msg;
+      console.log(err);
       res.status(err.status).json(response);
     } else {
       // create the unique token for the user
