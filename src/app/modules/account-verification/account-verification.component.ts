@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NgxOtpInputConfig } from "ngx-otp-input";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
+import { ApiService } from "../../common/services/api.service";
 
 @Component({
   selector: "app-account-verification",
@@ -12,7 +13,7 @@ export class AccountVerificationComponent implements OnInit {
   otp: string;
   data;
   otpInputConfig: NgxOtpInputConfig = {
-    otpLength: 5,
+    otpLength: 6,
     autofocus: true,
     classList: {
       inputBox: "my-super-box-class",
@@ -24,12 +25,12 @@ export class AccountVerificationComponent implements OnInit {
     },
   };
 
-  constructor(private snackBar: MatSnackBar, private router: Router) {
+  constructor(private snackBar: MatSnackBar, private router: Router, private apiService: ApiService) {
     this.data = this.router.getCurrentNavigation()?.extras.state;
   }
 
   async ngOnInit() {
-    if (this.data.action !== "allow_redirect") {
+    if (!this.data) {
       await this.router.navigate(["/"]);
     }
   }
@@ -41,5 +42,13 @@ export class AccountVerificationComponent implements OnInit {
       });
       return;
     }
+    this.apiService.postVerifyUser({ otp: this.otp, email: this.data.email }).subscribe({
+      next: async data => {
+        await this.router.navigate(["/login"]);
+      },
+      error: err => {
+        this.snackBar.open(err.error.msg || "Something went wrong, please try again later", "OK");
+      },
+    });
   }
 }

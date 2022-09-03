@@ -8,7 +8,7 @@ const log = require("../log");
 
 // register
 router.post("/register", (req, res, next) => {
-  let response = { success: false };
+  let response = {};
 
   let newUser = new User({
     name: req.body.name,
@@ -22,7 +22,6 @@ router.post("/register", (req, res, next) => {
       response.msg = err.msg || "Failed to register user";
       res.status(err.status || 400).json(response);
     } else {
-      response.success = true;
       response.msg = "User registered successfully";
       delete user.password;
       delete user.otp;
@@ -33,7 +32,7 @@ router.post("/register", (req, res, next) => {
   });
 });
 
-router.post("/verify_account", (req, res, next) => {
+router.post("/verify_otp", (req, res, next) => {
   const { email, otp } = req.body;
   User.verifyUser(email, otp, (err, user) => {
     if (err) {
@@ -46,7 +45,7 @@ router.post("/verify_account", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   let body = req.body;
-  let response = { success: false };
+  let response = {};
 
   User.authenticate(body.email.trim(), body.password.trim(), (err, user) => {
     if (err) {
@@ -57,15 +56,12 @@ router.post("/login", (req, res, next) => {
       // create the unique token for the user
       let signData = {
         id: user._id,
+        name: user.name,
         email: user.email,
       };
-      let token = jwt.sign(signData, config.tokenSecret);
-
-      response.token = "JWT " + token;
+      response.token = jwt.sign(signData, config.tokenSecret);
       response.user = signData;
-      response.success = true;
       response.msg = "User authenticated successfully";
-
       console.log("[%s] authenticated successfully", user.email);
       res.json(response);
     }
@@ -74,7 +70,7 @@ router.post("/login", (req, res, next) => {
 
 // profile
 router.get("/profile", passport.authenticate("jwt", { session: false }), (req, res, next) => {
-  let response = { success: true };
+  let response = {};
   response.msg = "Profile retrieved successfully";
   response.user = req.user;
   res.json(response);
@@ -85,7 +81,6 @@ router.get("/", (req, res, next) => {
   User.getUsers()
     .then(users => {
       let response = {
-        success: true,
         users: users,
       };
       return res.json(response);

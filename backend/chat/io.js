@@ -1,4 +1,4 @@
-const socketIo = require("socket.io");
+const socket = require("socket.io");
 const Message = require("../models/message");
 const config = require("../config");
 
@@ -6,7 +6,7 @@ const users = [];
 const connections = [];
 
 const initialize = server => {
-  const io = socketIo(server, { path: config.chatPath });
+  const io = socket(server, { path: config.chatPath, cors: { origin: "*" } });
 
   io.on("connection", socket => {
     connections.push(socket);
@@ -36,7 +36,7 @@ const initialize = server => {
     });
 
     socket.on("message", data => {
-      if (data.to === "chat-room") {
+      if (data.to === "") {
         socket.broadcast.to("chat-room").emit("message", data.message);
       } else {
         let user = searchUser(data.to);

@@ -25,7 +25,7 @@
       </button>
       <span>MEAN Chat</span>
       <span class="example-spacer"></span>
-      <ng-template [ngIf]="!userAuthenticated" [ngIfElse]="logout">
+      <ng-template [ngIf]="!userAuthenticated" [ngIfElse]="logout_btn">
         <button mat-button routerLink="/sign_up">
           <mat-icon>favorite</mat-icon>
           Signup
@@ -36,8 +36,8 @@
         </button>
       </ng-template>
 
-      <ng-template #logout>
-        <button mat-button>
+      <ng-template #logout_btn>
+        <button mat-button (click)="logout()">
           <mat-icon>logout</mat-icon>
           Logout
         </button>

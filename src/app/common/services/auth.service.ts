@@ -6,13 +6,20 @@ import { Injectable } from "@angular/core";
 export class AuthService {
   private user;
 
-  constructor() {}
-
-  public get currentUserDetails() {
-    return this.user;
+  constructor() {
+    this.currentUserDetails;
   }
 
-  public clearStorageData() {}
+  public get currentUserDetails() {
+    const dataExist = localStorage.getItem("USER");
+    if (dataExist) return (this.user = JSON.parse(dataExist));
+  }
 
-  public setDataInStorage() {}
+  public clearStorageData() {
+    localStorage.removeItem("USER");
+  }
+
+  public setDataInStorage(data) {
+    localStorage.setItem("USER", JSON.stringify(data));
+  }
 }

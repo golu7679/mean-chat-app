@@ -26,6 +26,7 @@ const routes: Routes = [
   {
     path: "conversation/:id",
     loadChildren: () => import("./modules/conversation/conversation.module").then(m => m.ConversationModule),
+    canActivate: [!AuthGuard],
   },
   {
     path: "**",

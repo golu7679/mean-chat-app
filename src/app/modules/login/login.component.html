@@ -14,8 +14,12 @@
         </button>
       </mat-form-field>
 
-      <button *ngIf="!submitForm" mat-raised-button type="submit" color="primary">Login up</button>
-      <mat-spinner *ngIf="submitForm" [diameter]="30"></mat-spinner>
+      <button mat-raised-button type="submit" color="primary" [disabled]="submitForm">
+        Login up
+        <mat-icon>
+          <mat-spinner [diameter]="20"></mat-spinner>
+        </mat-icon>
+      </button>
     </form>
   </mat-card>
 </div>

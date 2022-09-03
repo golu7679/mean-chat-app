@@ -15,12 +15,7 @@ export class SignupComponent implements OnInit {
   singUpForm: FormGroup;
   submitForm = false;
 
-  constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
-              private apiService: ApiService,
-              private snackbar: MatSnackBar,
-              private router: Router) {
-  }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private apiService: ApiService, private snackbar: MatSnackBar, private router: Router) {}
 
   ngOnInit(): void {
     this.singUpForm = this.formBuilder.group({
@@ -32,13 +27,16 @@ export class SignupComponent implements OnInit {
 
   submit() {
     if (this.singUpForm.invalid) return;
-
+    this.submitForm = true;
+    this.singUpForm.disable();
     this.apiService.postSignUp(this.singUpForm.value).subscribe({
       next: async data => {
         this.snackbar.open("Check your node console", "OK");
-        await this.router.navigate(["account_verification"], { state: { action: "allow_redirect" } });
+        await this.router.navigate(["account_verification"], { state: { email: this.singUpForm.value.email } });
       },
       error: err => {
+        this.submitForm = false;
+        this.singUpForm.enable();
         this.snackbar.open(err.error.message, "OK", {
           duration: 3000,
           panelClass: "error-snackbar",

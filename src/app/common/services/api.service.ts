@@ -36,4 +36,8 @@ export class ApiService {
   changePassword(data) {
     return this.httpClient.post(environment.apiUrl + "users/change_password", data);
   }
+
+  getUsersList() {
+    return this.httpClient.get(environment.apiUrl + "users");
+  }
 }

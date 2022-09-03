@@ -2,6 +2,9 @@ import { Component, ViewChild } from "@angular/core";
 import { Observable } from "rxjs";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map, shareReplay } from "rxjs/operators";
+import { AuthService } from "./common/services/auth.service";
+import { ApiService } from "./common/services/api.service";
+import { ChatService } from "./common/services/chat.service";
 
 @Component({
   selector: "app-root",
@@ -42,12 +45,38 @@ export class AppComponent {
       updated: new Date("1/18/16"),
     },
   ];
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.userAuthenticated = !!localStorage.getItem("USER_DETAILS");
+
+  usersList: any;
+
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private apiService: ApiService, private chatService: ChatService) {
+    this.userAuthenticated = this.authService.currentUserDetails;
+    if (authService.currentUserDetails) {
+      this.getUsersList();
+    }
+  }
+
+  getUsersList() {
+    this.connectToChat();
+  }
+
+  connectToChat() {
+    if (this.chatService.isConnected()) {
+    } else {
+      this.chatService.connect(this.authService.currentUserDetails.user.email, () => {
+        this.chatService.getUserList().subscribe({
+          next: data => {},
+          error: err => {},
+        });
+      });
+    }
   }
 
   toggleDrawer() {
-    console.log(this.drawer);
     this.drawer.toggle();
+  }
+
+  public logout() {
+    this.authService.clearStorageData();
+    this.userAuthenticated = this.authService.currentUserDetails;
   }
 }

@@ -26,10 +26,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-app.get("/", (req, res) => {
-  return res.send({ message: "hi" });
-});
-
 // static folder
 app.use(config.root, express.static(path.join(__dirname, "public")));
 app.options("*", cors()); // include before other routes

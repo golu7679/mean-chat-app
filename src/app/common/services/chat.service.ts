@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import { io } from "socket.io-client";
-import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 
@@ -20,11 +20,11 @@ export interface Message {
 export class ChatService {
   private socket: any;
   private apiUrl: string = `${environment.apiUrl}/messages`;
-  private usersUrl: string = `${environment.apiUrl}/users`;
+  private usersUrl: string = `${environment.apiUrl}users`;
 
-  constructor(public authService: AuthService, public http: HttpClient, private httpRequest: HttpRequest<any>) {}
+  constructor(public authService: AuthService, public http: HttpClient) {}
 
-  connect(username: string, callback: Function = () => {}): void {
+  connect(email: string, callback: Function = () => {}): void {
     // initialize the connection
     this.socket = io(environment.chatUrl, { path: environment.chatPath });
 
@@ -35,18 +35,18 @@ export class ChatService {
     });
 
     this.socket.on("connect", () => {
-      this.sendUser(username);
+      this.sendUser(email);
       console.log("connected to the chat server");
       callback();
     });
   }
 
   isConnected(): boolean {
-    return this.socket != null;
+    return !!this.socket;
   }
 
   sendUser(username: string): void {
-    this.socket.emit("username", { username: username });
+    this.socket.emit("email", { email: username });
   }
 
   disconnect(): void {
@@ -67,7 +67,7 @@ export class ChatService {
   getUserList(): any {
     let url = this.usersUrl;
     let authToken = this.authService.currentUserDetails.token;
-    return this.http.post(url, {}, { headers: new HttpHeaders(`Authorization: ${authToken}`) });
+    return this.http.get(url, { headers: new HttpHeaders(`Authorization: ${authToken}`) });
   }
 
   receiveMessage(): any {
