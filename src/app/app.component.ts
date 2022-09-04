@@ -41,8 +41,7 @@ export class AppComponent {
     private chatService: ChatService,
     public el: ElementRef,
     public router: Router,
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     this.userAuthenticated = this.authService.currentUserDetails;
@@ -75,8 +74,6 @@ export class AppComponent {
       });
     }
   }
-
-
 
   getUserList(): void {
     this.chatService.getUserList().subscribe(data => {
@@ -123,16 +120,12 @@ export class AppComponent {
       });
 
       this.chatService.getActiveList();
-
     });
   }
 
   initReceivers(): void {
     this.getUserList();
-
-   }
-
-
+  }
 
   checkMine(message: Message): void {
     if (message.from == this.userEmail) {
@@ -154,8 +147,6 @@ export class AppComponent {
     sound.load();
     sound.play();
   }
-
-
 
   checkOnline(name: string) {
     for (let user of this.userList) {

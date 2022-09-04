@@ -3,18 +3,21 @@
 }
 
 .custom {
-  position: initial;
+  position: relative;
+  height: calc(100% - 70px);
+  width: 100%;
 }
 
 .secondToolbar {
   position: fixed;
   z-index: 10;
   background: #eee;
-  width: 85.9%;
+  //width: initial;
+  width: 100%;
   transition: opacity 0.25s ease-out, height 0.15s ease;
   cursor: default;
   user-select: none;
-  top: 56px;
+  //top: 56px;
 }
 
 section {
@@ -57,6 +60,7 @@ message-area
 ******************************** */
 
 .message-area {
+  height: inherit;
   background: #f5f5f5;
 }
 
@@ -299,22 +303,22 @@ a.add img {
   position: relative;
 }
 
-.msg-body ul li.reply:before {
-  display: block;
-  clear: both;
-  content: "";
-  position: absolute;
-  bottom: 15px;
-  right: -7px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 12px 15px 12px;
-  border-color: transparent transparent #4b7bec transparent;
-  -webkit-transform: rotate(37deg);
-  -ms-transform: rotate(37deg);
-  transform: rotate(37deg);
-}
+//.msg-body ul li.reply:before {
+//  display: block;
+//  clear: both;
+//  content: "";
+//  position: absolute;
+//  bottom: 15px;
+//  right: -7px;
+//  width: 0;
+//  height: 0;
+//  border-style: solid;
+//  border-width: 0 12px 15px 12px;
+//  border-color: transparent transparent #4b7bec transparent;
+//  -webkit-transform: rotate(37deg);
+//  -ms-transform: rotate(37deg);
+//  transform: rotate(37deg);
+//}
 
 .msg-body ul li.reply p {
   color: #fff;
@@ -399,13 +403,13 @@ li.reply .time {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
+  //margin-bottom: 15px;
 }
 
 .send-box .form-control {
   display: block;
   width: 85%;
-  padding: 0.375rem 0.75rem;
+  //padding: 0.375rem 0.75rem;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
@@ -541,7 +545,7 @@ button:focus {
 }
 
 @media screen and (max-width: 960px) {
-  .secondToolbar {
-    width: 100%;
-  }
+  //.secondToolbar {
+  //  width: 100%;
+  //}
 }

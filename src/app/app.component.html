@@ -13,11 +13,12 @@
       <mat-list-item matRipple *ngFor="let user of userList" role="button" [routerLink]="'/conversation/' + user.email">
         <img matListAvatar src="https://picsum.photos/200" alt="avatar" height="50" width="50" />
         <div mat-line>{{ user.name }}</div>
-<!--                <div mat-line>{{ user.email }}</div>-->
+        <!--                <div mat-line>{{ user.email }}</div>-->
         <span class="badge" matBadge="4" matBadgeColor="accent" matBadgeOverlap="true"></span>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="(isHandset$ | async) && userAuthenticated" (click)="toggleDrawer()">

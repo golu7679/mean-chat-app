@@ -92,7 +92,6 @@ const searchUser = email => {
       return users[i];
     }
   }
-
   return false;
 };
 

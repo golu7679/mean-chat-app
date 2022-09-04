@@ -1,70 +1,22 @@
+<mat-toolbar class="secondToolbar mat-elevation-z5">
+  <span>Lorem Ipsum</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon color="accent">info</mat-icon>
+  </button>
+</mat-toolbar>
+
 <div class="custom">
-  <mat-toolbar class="secondToolbar mat-elevation-z5">
-    <span>Lorem Ipsum</span>
-    <span class="spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon color="accent">info</mat-icon>
-    </button>
-  </mat-toolbar>
-
   <section class="message-area">
-    <div class="chat-area" >
-      <div class="chat-box" >
-        <div class="modal-dialog-scrollable" >
-          <div class="modal-content" >
+    <div class="chat-area">
+      <div class="chat-box">
+        <div class="modal-dialog-scrollable">
+          <div class="modal-content">
             <div class="modal-body">
-              <div  class="msg-body">
-                <ul   #chat_scroller>
-
-                  <li class="">
-
-                  </li>
-
-                  <li class="sender">
-                    <p>Hey, Are you there?</p>
-                    <span class="time">10:06 am</span>
-                  </li>
-                  <li class="sender">
-                    <p>Hey, Are you there?</p>
-                    <span class="time">10:16 am</span>
-                  </li>
-                  <li class="reply">
-                    <p>Last Minute Festive Packages From Superbreak</p>
-                    <span class="time">10:20 am</span>
-                  </li>
-                  <li class="sender">
-                    <p>Hey, Are you there?</p>
-                    <span class="time">10:26 am</span>
-                  </li>
-                  <li class="sender">
-                    <p>Hey, Are you there?</p>
-                    <span class="time">10:32 am</span>
-                  </li>
-                  <li class="reply">
-                    <p>Last Minute Festive Packages From Superbreak</p>
-                    <span class="time">10:35 am</span>
-                  </li>
-                  <li class="reply">
-                    <p>Last Minute Festive Packages From Superbreak</p>
-                    <span class="time">10:35 am</span>
-                  </li>
-                  <li class="reply">
-                    <p>Last Minute Festive Packages From Superbreak</p>
-                    <span class="time">10:35 am</span>
-                  </li>
-                  <li>
-                    <div class="divider">
-                      <h6>yesterday</h6>
-                    </div>
-                  </li>
-
-                  <li class="reply">
-                    <p>Last Minute Festive Packages From Superbreak</p>
-                    <span class="time">10:36 am</span>
-                  </li>
-                  <li class="reply">
-                    <p>Last Minute Festive Packages From Superbreak</p>
-                    <span class="time">junt now</span>
+              <div class="msg-body">
+                <ul #chat_scroller>
+                  <li *ngFor="let msg of messageList" [class]="msg.mine ? 'reply' : 'sender'">
+                    <p>{{ msg.text }}</p>
                   </li>
                 </ul>
               </div>
@@ -76,9 +28,9 @@
 
     <div class="send-box">
       <mat-form-field appearance="fill" style="width: 100%">
-        <input matInput style="width: 100%" placeholder="Enter your message" [(ngModel)]="senderMessage"/>
+        <input matInput style="width: 100%" placeholder="Enter your message" [(ngModel)]="senderMessage" />
         <button mat-icon-button matSuffix color="warn" (click)="sendMessage()">
-          <mat-icon color="primary"> send </mat-icon>
+          <mat-icon color="primary"> send</mat-icon>
         </button>
       </mat-form-field>
     </div>

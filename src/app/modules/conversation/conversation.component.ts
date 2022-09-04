@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ChatService, Message } from "../../common/services/chat.service";
 import { AuthService } from "../../common/services/auth.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { FormGroup } from "@angular/forms";
 
 @Component({
@@ -11,7 +10,6 @@ import { FormGroup } from "@angular/forms";
   styleUrls: ["./conversation.component.scss"],
 })
 export class ConversationComponent implements OnInit {
-
   receiverEmail: string;
   userInfo: any;
   messageList: Array<Message>;
@@ -27,27 +25,21 @@ export class ConversationComponent implements OnInit {
 
   @ViewChild("chat_scroller") private chatScroller: ElementRef;
 
-
-  constructor(private activatedRoute: ActivatedRoute,
-              private chatService: ChatService,
-              private authService: AuthService,
-              private snackBar: MatSnackBar,
-              public el: ElementRef) {
+  constructor(private activatedRoute: ActivatedRoute, private chatService: ChatService, private authService: AuthService, public el: ElementRef) {
     this.receiverEmail = this.activatedRoute.snapshot.params["email"];
   }
 
   ngOnInit(): void {
-
     this.userInfo = this.authService.currentUserDetails;
     this.getMessages(this.receiverEmail);
-    this.chatService.getConversation(this.authService.currentUserDetails.user.email, this.receiverEmail).subscribe({
-      next: (data) => {
-
-      },
-      error: (err) => {
-        this.snackBar.open(err.error.msg || "Unable to fetch message please try again later", "OK");
-      },
-    });
+    // this.chatService.getConversation(this.authService.currentUserDetails.user.email, this.receiverEmail).subscribe({
+    //   next: (data) => {
+    //
+    //   },
+    //   error: (err) => {
+    //     this.snackBar.open(err.error.msg || "Unable to fetch message please try again later", "OK");
+    //   },
+    // });
   }
 
   ngAfterViewInit() {
@@ -64,7 +56,6 @@ export class ConversationComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-
   }
 
   getMessages(name: string): void {
@@ -84,7 +75,6 @@ export class ConversationComponent implements OnInit {
       }
     });
 
-
     this.receiveMessageObs = this.chatService.receiveMessage().subscribe(message => {
       this.checkMine(message);
       if (message.conversationId == this.conversationId) {
@@ -98,7 +88,6 @@ export class ConversationComponent implements OnInit {
         }
         this.notification = {
           from: message.from,
-          inChatRoom: message.inChatRoom,
           text: message.text,
           timeout: setTimeout(() => {
             this.notify = false;
@@ -108,7 +97,6 @@ export class ConversationComponent implements OnInit {
         this.notifSound();
       }
     });
-
   }
 
   checkMine(message: Message): void {
@@ -123,7 +111,6 @@ export class ConversationComponent implements OnInit {
   //     element.scrollTop = element.scrollHeight;
   //   }, 100);
   // }
-
 
   notifSound(): void {
     let sound: any = this.el.nativeElement.querySelector("#notifSound");
@@ -143,17 +130,13 @@ export class ConversationComponent implements OnInit {
       from: this.userInfo.user.email,
       text: this.senderMessage,
       conversationId: this.conversationId,
-      inChatRoom: false,
     };
 
     this.chatService.sendMessage(newMessage, this.receiverEmail);
     newMessage.mine = true;
     this.noMsg = false;
-    console.log("Your new message data", newMessage);
-    console.log("your message list", this.messageList);
     this.messageList.push(newMessage);
-    // this.scrollToBottom();
     // this.msgSound();
-    this.sendForm.setValue({ message: "" });
+    this.senderMessage = "";
   }
 }

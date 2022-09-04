@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: "conversation/:email",
     loadChildren: () => import("./modules/conversation/conversation.module").then(m => m.ConversationModule),
-    canActivate: [ConversationGuard]
+    canActivate: [ConversationGuard],
   },
   {
     path: "**",
