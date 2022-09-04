@@ -10,10 +10,10 @@
   >
     <mat-toolbar>Users</mat-toolbar>
     <mat-list>
-      <mat-list-item matRipple *ngFor="let folder of folders" role="button">
+      <mat-list-item matRipple *ngFor="let user of userList" role="button" [routerLink]="'/conversation/' + user.email">
         <img matListAvatar src="https://picsum.photos/200" alt="avatar" height="50" width="50" />
-        <div mat-line>{{ folder.name }}</div>
-        <div mat-line>{{ folder.updated | date }}</div>
+        <div mat-line>{{ user.name }}</div>
+<!--                <div mat-line>{{ user.email }}</div>-->
         <span class="badge" matBadge="4" matBadgeColor="accent" matBadgeOverlap="true"></span>
       </mat-list-item>
     </mat-list>

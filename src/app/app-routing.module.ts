@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./modules/home/home.component";
 import { AuthGuard } from "./common/guards/auth.guard";
+import { ConversationGuard } from "./common/guards/conversation.guard";
 
 const routes: Routes = [
   {
@@ -24,9 +25,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "conversation/:id",
+    path: "conversation/:email",
     loadChildren: () => import("./modules/conversation/conversation.module").then(m => m.ConversationModule),
-    canActivate: [!AuthGuard],
+    canActivate: [ConversationGuard]
   },
   {
     path: "**",

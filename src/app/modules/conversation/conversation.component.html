@@ -8,13 +8,18 @@
   </mat-toolbar>
 
   <section class="message-area">
-    <div class="chat-area">
-      <div class="chat-box">
-        <div class="modal-dialog-scrollable">
-          <div class="modal-content">
+    <div class="chat-area" >
+      <div class="chat-box" >
+        <div class="modal-dialog-scrollable" >
+          <div class="modal-content" >
             <div class="modal-body">
-              <div class="msg-body">
-                <ul>
+              <div  class="msg-body">
+                <ul   #chat_scroller>
+
+                  <li class="">
+
+                  </li>
+
                   <li class="sender">
                     <p>Hey, Are you there?</p>
                     <span class="time">10:06 am</span>
@@ -71,8 +76,8 @@
 
     <div class="send-box">
       <mat-form-field appearance="fill" style="width: 100%">
-        <input matInput style="width: 100%" placeholder="Enter your message" />
-        <button mat-icon-button matSuffix color="warn">
+        <input matInput style="width: 100%" placeholder="Enter your message" [(ngModel)]="senderMessage"/>
+        <button mat-icon-button matSuffix color="warn" (click)="sendMessage()">
           <mat-icon color="primary"> send </mat-icon>
         </button>
       </mat-form-field>

@@ -19,7 +19,7 @@ export interface Message {
 })
 export class ChatService {
   private socket: any;
-  private apiUrl: string = `${environment.apiUrl}/messages`;
+  private apiUrl: string = `${environment.apiUrl}messages`;
   private usersUrl: string = `${environment.apiUrl}users`;
 
   constructor(public authService: AuthService, public http: HttpClient) {}
@@ -55,19 +55,19 @@ export class ChatService {
 
   getConversation(name1: string, name2: string): any {
     let url = this.apiUrl;
-    if (name2 != "chat-room") {
+    if (name2 != "") {
       let route = "/" + name1 + "/" + name2;
       url += route;
     }
 
     let authToken = this.authService.currentUserDetails.token;
-    return this.http.post(url, {}, { headers: new HttpHeaders(`Authorization: ${authToken}`) });
+    return this.http.get(url, { headers: new HttpHeaders(`Authorization: JWT ${authToken}`) });
   }
 
   getUserList(): any {
     let url = this.usersUrl;
     let authToken = this.authService.currentUserDetails.token;
-    return this.http.get(url, { headers: new HttpHeaders(`Authorization: ${authToken}`) });
+    return this.http.get(url, { headers: new HttpHeaders(`Authorization: JWT ${authToken}`) });
   }
 
   receiveMessage(): any {
