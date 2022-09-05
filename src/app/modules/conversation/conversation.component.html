@@ -15,9 +15,8 @@
             <div class="modal-body">
               <div class="msg-body">
                 <ul #chat_scroller>
-                  <li *ngFor="let msg of messageList" [class]="msg.mine ? 'reply' : 'sender'">
-                    <p>{{ msg.text }}</p>
-                  </li>
+                  <app-message *ngFor="let msg of messageList" [msg]="msg">
+                  </app-message>
                 </ul>
               </div>
             </div>

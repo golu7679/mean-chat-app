@@ -4,9 +4,10 @@ import { ConversationComponent } from "./conversation.component";
 import { RouterModule } from "@angular/router";
 import { MaterialsModule } from "../../materials.module";
 import { FormsModule } from "@angular/forms";
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
-  declarations: [ConversationComponent],
+  declarations: [ConversationComponent, MessageComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([

@@ -251,13 +251,13 @@ a.add img {
   margin: 15px 0;
 }
 
-.msg-body ul li.sender {
+.sender {
   display: block;
   width: 100%;
   position: relative;
 }
 
-.msg-body ul li.sender:before {
+.sender:before {
   display: block;
   clear: both;
   content: "";
@@ -274,7 +274,8 @@ a.add img {
   transform: rotate(-37deg);
 }
 
-.msg-body ul li.sender p {
+/*
+.sender p {
   color: #000;
   font-size: 14px;
   line-height: 1.5;
@@ -288,7 +289,7 @@ a.add img {
   margin-bottom: 0;
 }
 
-.msg-body ul li.sender p b {
+.sender p b {
   display: block;
   color: #180660;
   font-size: 14px;
@@ -296,12 +297,13 @@ a.add img {
   font-weight: 500;
 }
 
-.msg-body ul li.reply {
+.reply {
   display: block;
   width: 100%;
   text-align: right;
   position: relative;
 }
+*/
 
 //.msg-body ul li.reply:before {
 //  display: block;
@@ -320,7 +322,7 @@ a.add img {
 //  transform: rotate(37deg);
 //}
 
-.msg-body ul li.reply p {
+/*.reply p {
   color: #fff;
   font-size: 14px;
   line-height: 1.5;
@@ -334,7 +336,7 @@ a.add img {
   margin-bottom: 0;
 }
 
-.msg-body ul li.reply p b {
+.reply p b {
   display: block;
   color: #061061;
   font-size: 14px;
@@ -342,7 +344,7 @@ a.add img {
   font-weight: 500;
 }
 
-.msg-body ul li.reply:after {
+.reply:after {
   display: block;
   content: "";
   clear: both;
@@ -356,14 +358,14 @@ a.add img {
   font-weight: 400;
 }
 
-li.reply .time {
+.reply .time {
   margin-right: 20px;
 }
 
 .divider {
   position: relative;
   text-align: center;
-}
+}*/
 
 .msg-body h6 {
   text-align: center;
