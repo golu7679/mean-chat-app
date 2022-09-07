@@ -1,0 +1,132 @@
+// The margin between two sections
+$margin-promotion-sections: 50px;
+$margin-promotion-sections-small: 15px;
+
+.header-background {
+  overflow: hidden;
+  position: relative;
+  height: 420px;
+}
+
+.header-background::before {
+  content: '';
+  position: absolute;
+  background-image: url("../../../assets/img/angular-white.svg");
+  background-size: 600px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  background-position: 80% 20px;
+  opacity: 0.2;
+}
+
+.header-section {
+  width: 90%;
+  position: absolute;
+  z-index: 0;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header-headline {
+  h1 {
+    font-size: 56px;
+    font-weight: bold;
+    line-height: 56px;
+    margin: 15px 5px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 28px;
+    margin: 15px 0 25px 0;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .header-background {
+    height: 330px;
+  }
+  .header-background:before {
+    background-image: none;
+  }
+}
+
+@media (max-width: 850px) {
+
+  .header-background:before {
+    background-image: none;
+  }
+
+}
+
+
+
+
+.help-support {
+  width: 75%;
+  margin: auto;
+  padding-bottom: 40px;
+}
+
+.help-support ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 18px 0;
+}
+
+.help-support ul li {
+  text-align: center;
+  flex: 0 1 200px;
+  -moz-box-flex: 0;
+}
+
+.help-support ul li a {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.help-support ul li a:hover {
+  text-decoration: underline;
+}
+
+.help-support ul li a img {
+  display: block;
+  margin: 10px auto;
+  width: 50px;
+  height: 50px;
+}
+
+.help-support-description {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 884px) {
+  .help-support {
+    padding-bottom: 20px;
+  }
+  .help-support ul {
+    display: block;
+  }
+
+  .help-support ul li a {
+    display: flex;
+    align-items: center;
+  }
+  .help-support ul li a img {
+    margin: 10px;
+
+  }
+  .help-support-description {
+    display: none;
+  }
+}

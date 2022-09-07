@@ -45,7 +45,7 @@ export class AppComponent {
 
   async ngOnInit() {
     this.userAuthenticated = this.authService.currentUserDetails;
-    this.userEmail = this.authService.currentUserDetails.user.email;
+    this.userEmail = this.authService.currentUserDetails?.user.email;
     if (this.authService.currentUserDetails) {
       this.getUsersList();
     }
