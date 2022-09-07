@@ -10,21 +10,22 @@
   >
     <mat-toolbar>Users</mat-toolbar>
     <mat-list>
-      <mat-list-item matRipple *ngFor="let user of userList" role="button" [routerLink]="'/conversation/' + user.email">
+      <mat-list-item matRipple *ngFor="let user of userList" role="button"
+                     [routerLink]="'/conversation/' + user.email + '/' + user.name">
         <img matListAvatar src="https://picsum.photos/200" alt="avatar" height="50" width="50" />
         <div mat-line>{{ user.name }}</div>
-        <!--                <div mat-line>{{ user.email }}</div>-->
-        <span class="badge" matBadge="" matBadgeColor="accent" matBadgeOverlap="true"></span>
+        <span *ngIf="user.online" class="badge" matBadge="o" title="Online" matBadgeColor="accent" matBadgeOverlap="true"></span>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button *ngIf="(isHandset$ | async) && userAuthenticated" (click)="toggleDrawer()">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button
+              *ngIf="(isHandset$ | async) && userAuthenticated" (click)="toggleDrawer()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>MEAN Chat</span>
+      <span role="button" routerLink="/">MEAN Chat</span>
       <span class="example-spacer"></span>
       <ng-template [ngIf]="!userAuthenticated" [ngIfElse]="logout_btn">
         <button mat-button routerLink="/sign_up">

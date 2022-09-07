@@ -23,10 +23,13 @@ export class ConversationComponent implements OnInit {
   notification: any = { timeout: null };
   senderMessage: string = "";
 
+  senderName: any;
+
   @ViewChild("chat_scroller") private chatScroller: ElementRef;
 
   constructor(private activatedRoute: ActivatedRoute, private chatService: ChatService, private authService: AuthService, public el: ElementRef) {
     this.receiverEmail = this.activatedRoute.snapshot.params["email"];
+    this.senderName = this.activatedRoute.snapshot.params["name"];
   }
 
   ngOnInit(): void {
